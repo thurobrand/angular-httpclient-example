@@ -36,6 +36,13 @@ export class DataService {
     const options = {params: new HttpParams({fromString: "_page=1&_limit=20"})};
     return this.httpClient.get(this.REST_API_SERVER,options).pipe(retry(3), catchError(this.handleError));
   }
+  public sendGetRequestToUrl(url: string){
+    return this.httpClient.get(url, { observe: "response"}).pipe(retry(3), catchError(this.handleError), tap(res => {
+      console.log(res.headers.get('Link'));
+      this.parseLinkHeader(res.headers.get('Link'));
+
+    }));
+  }
 
   public parseLinkHeader(header){
     if(header.length==0){
