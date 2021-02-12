@@ -17,7 +17,3 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-2(a^2)=8^2
-2(a^2) = 64
-a^2 = 64\2 =32
-a=sqrt(32)
