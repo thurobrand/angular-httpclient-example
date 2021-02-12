@@ -17,11 +17,12 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-     this.dataService.sendGetRequest().pipe(takeUntil(this.destroy$)).subscribe((data: any[]) => {
-       console.log(data);
-       this.products=data;
-     })
+    this.dataService.sendGetRequest().pipe(takeUntil(this.destroy$)).subscribe((res: HttpResponse<any>)=>{
+      console.log(res);
+      this.products = res.body;
+    })   
   }
+  
   ngOnDestroy(){
     this.destroy$.next(true);
     //UnSubscribe from the subject
@@ -55,12 +56,18 @@ export class HomeComponent implements OnInit {
     }
   }
   public lastPage() {
-    window.alert(this.dataService.last);
     this.products = [];
     this.dataService.sendGetRequestToUrl(this.dataService.last).pipe(takeUntil(this.destroy$)).subscribe((res: HttpResponse<any>) => {
       console.log(res);
       this.products = res.body;
     })
+  }
+
+  addToCart(id){
+    window.alert("Adding " + id + " to cart!");
+  }
+  showDetail(id){
+    window.alert("Details for " + id);
   }
 
 }

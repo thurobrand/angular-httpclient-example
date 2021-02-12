@@ -6,10 +6,10 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./paginate.component.css']
 })
 export class PaginateComponent implements OnInit {
-  @Output("firstPage") firstPage: EventEmitter<any> = new EventEmitter();
-  @Output("nextPage") nextPage: EventEmitter<any> = new EventEmitter();
-  @Output("lastPage") lastPage: EventEmitter<any> = new EventEmitter();
-  @Output("prevPage") prevPage: EventEmitter<any> = new EventEmitter();
+  @Output("first") firstPage: EventEmitter<any> = new EventEmitter();
+  @Output("next") nextPage: EventEmitter<any> = new EventEmitter();
+  @Output("last") lastPage: EventEmitter<any> = new EventEmitter();
+  @Output("prev") prevPage: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {

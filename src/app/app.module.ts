@@ -13,13 +13,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PaginateComponent } from './paginate/paginate.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AboutComponent,
-    PaginateComponent
+    PaginateComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,

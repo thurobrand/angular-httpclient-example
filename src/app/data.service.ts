@@ -15,7 +15,8 @@ export class DataService {
   public next:  string="";
   public prev:  string="";
 
-  private REST_API_SERVER = "http://localhost:3000/products";
+  private REST_API_SERVER = "http://localhost:4040";
+  
 
   constructor(private httpClient: HttpClient) { }
 
@@ -32,9 +33,12 @@ export class DataService {
     return throwError(errorMessage);
   }
 
-  public sendGetRequest(){
-    const options = {params: new HttpParams({fromString: "_page=1&_limit=20"})};
-    return this.httpClient.get(this.REST_API_SERVER,options).pipe(retry(3), catchError(this.handleError));
+   public sendGetRequest(){
+    // Add safe, URL encoded _page and _limit parameters 
+    return this.httpClient.get(this.REST_API_SERVER + "/products", {params: new HttpParams({fromString: "_page=1&_limit=20"}), observe: "response"}).pipe(retry(3), catchError(this.handleError), tap(res => {
+      console.log(res.headers.get('Link'));
+      this.parseLinkHeader(res.headers.get('Link'));
+    }));
   }
   public sendGetRequestToUrl(url: string){
     return this.httpClient.get(url, { observe: "response"}).pipe(retry(3), catchError(this.handleError), tap(res => {
@@ -43,6 +47,11 @@ export class DataService {
 
     }));
   }
+
+  public sendGetProductRequest(productIdFromRoute: string){
+    // Add safe, URL encoded _page and _limit parameters 
+    return this.httpClient.get(this.REST_API_SERVER + "/product/"+productIdFromRoute, { observe: "response"}).pipe(retry(3), catchError(this.handleError));
+   }
 
   public parseLinkHeader(header){
     if(header.length==0){
