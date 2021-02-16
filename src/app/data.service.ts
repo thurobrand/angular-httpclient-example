@@ -16,7 +16,7 @@ export class DataService {
   public prev:  string="";
 
   private REST_API_SERVER = "http://localhost:4040";
-  
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,7 +34,7 @@ export class DataService {
   }
 
    public sendGetRequest(){
-    // Add safe, URL encoded _page and _limit parameters 
+    // Add safe, URL encoded _page and _limit parameters
     return this.httpClient.get(this.REST_API_SERVER + "/products", {params: new HttpParams({fromString: "_page=1&_limit=20"}), observe: "response"}).pipe(retry(3), catchError(this.handleError), tap(res => {
       console.log(res.headers.get('Link'));
       this.parseLinkHeader(res.headers.get('Link'));
@@ -49,8 +49,10 @@ export class DataService {
   }
 
   public sendGetProductRequest(productIdFromRoute: string){
-    // Add safe, URL encoded _page and _limit parameters 
-    return this.httpClient.get(this.REST_API_SERVER + "/product/"+productIdFromRoute, { observe: "response"}).pipe(retry(3), catchError(this.handleError));
+    // Add safe, URL encoded _page and _limit parameters
+    return this.httpClient.get(this.REST_API_SERVER + "/products/"+productIdFromRoute, 
+                              { observe: "response"}).pipe(retry(3),
+                               catchError(this.handleError));
    }
 
   public parseLinkHeader(header){

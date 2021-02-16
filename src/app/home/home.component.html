@@ -5,7 +5,7 @@
     <mat-card *ngFor="let product of products" style="margin-top:11px;">
         <mat-card-header>
             <mat-card-title>
-                <a [title]="product.name + 'details'"  [routerLink]="['/product', product.id]">#{{product.id}}  {{product.name}}</a>
+                <a [title]="product.name + 'details'"  [routerLink]="['/product']" [queryParams]="{productId: product.id}">#{{product.id}}  {{product.name}}</a>
              </mat-card-title>
 
             <mat-card-subtitle>${{product.price}} / {{product.quantity}}

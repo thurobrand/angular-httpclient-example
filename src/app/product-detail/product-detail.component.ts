@@ -12,24 +12,28 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class ProductDetailComponent implements OnInit {
   product: any;
+  productId: string;
   destroy$: Subject<boolean>  = new Subject<boolean>();
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const productIdFromRoute = routeParams.get('productId');
-    window.alert("here " + productIdFromRoute );
-    this.dataService.sendGetProductRequest(productIdFromRoute).pipe(takeUntil(this.destroy$)).subscribe((res: HttpResponse<any>)=>{
+
+    const routeParams = this.route.queryParams.subscribe(params => {
+      this.productId = params['productId'];
+    });
+
+    window.alert("here " + this.route );
+    this.dataService.sendGetProductRequest(this.productId).pipe(takeUntil(this.destroy$)).subscribe((res: HttpResponse<any>)=>{
       console.log(res);
       this.product = res.body;
-    })   
+    })
   }
- 
+
   ngOnDestroy(){
     this.destroy$.next(true);
     //UnSubscribe from the subject
     this.destroy$.unsubscribe();
   }
-    
-  
+
+
 }
